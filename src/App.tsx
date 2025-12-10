@@ -88,9 +88,9 @@ function App() {
 					/>
 				</div>
 
-				<button onClick={calculate} className="calculate-btn">
+				{/* <button onClick={calculate} className="calculate-btn">
 					🚬 Рассчитать время
-				</button>
+				</button> */}
 
 				{result && (
 					<div className="result">
