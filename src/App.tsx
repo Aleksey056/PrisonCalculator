@@ -2,25 +2,32 @@ import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
 type CalculatorResult = {
-	capacity?: string;
-	speed?: string;
+	capacity: string;
+	speed: string;
 	timeMinutes: string;
-}
+};
 
 function App() {
-	const [respect, setRespect] = useState('0');
-	const [mining, setMining] = useState('0');
+	const [respect, setRespect] = useState<string>('0');
+	const [mining, setMining] = useState<string>('0');
 	const [result, setResult] = useState<CalculatorResult | null>(null);
 
+	const parseNumber = (value: string): number => {
+		return parseFloat(value) || 0;
+	};
+
 	const calculate = useCallback(() => {
-		const capacity = Math.round(21000 + 2100 * mining);
-		const speed = 43.75 + 0.4375 * respect;
+		const respectNum = parseNumber(respect);
+		const miningNum = parseNumber(mining);
+
+		const capacity = Math.round(21000 + 2100 * miningNum);
+		const speed = 43.75 + 0.4375 * respectNum;
 		const timeMinutes = capacity / speed;
 
 		setResult({
-			capacity,
-			speed,
-			timeMinutes,
+			capacity: capacity.toLocaleString('ru-RU'),
+			speed: speed.toFixed(2),
+			timeMinutes: formatTimeHM(timeMinutes),
 		});
 	}, [respect, mining]);
 
@@ -60,9 +67,9 @@ function App() {
 					<input
 						id="respect"
 						type="number"
-						step="1"
+						step="0.01"
 						value={respect}
-						onChange={(e) => setRespect((e.target.value))}
+						onChange={(e) => setRespect(e.target.value)}
 						placeholder="0"
 						className="input-group--text"
 					/>
@@ -73,9 +80,9 @@ function App() {
 					<input
 						id="mining"
 						type="number"
-						step="1"
+						step="0.01"
 						value={mining}
-						onChange={(e) => setMining((e.target.value))}
+						onChange={(e) => setMining(e.target.value)}
 						placeholder="0"
 						className="input-group--text"
 					/>
@@ -90,15 +97,15 @@ function App() {
 						<h3>Результаты:</h3>
 						<div className="stat">
 							<span>Максимальная вместимость (лимит):</span>
-							<span>{result.capacity.toLocaleString('ru-RU')} сиг</span>
+							<span>{result.capacity} сиг</span>
 						</div>
 						<div className="stat">
 							<span>Скорость (сиг/мин):</span>
-							<span>{result.speed.toFixed(2)} сиг/мин</span>
+							<span>{result.speed} сиг/мин</span>
 						</div>
 						<div className="stat">
 							<span>Время заполнения до лимита:</span>
-							<span>{formatTimeHM(result.timeMinutes)}</span>
+							<span>{result.timeMinutes}</span>
 						</div>
 					</div>
 				)}
