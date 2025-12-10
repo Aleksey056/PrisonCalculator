@@ -2,28 +2,25 @@ import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 
 type CalculatorResult = {
-	capacity: number;
-	speed: number;
-	timeMinutes: number;
-	timeRounded: number;
+	capacity?: string;
+	speed?: string;
+	timeMinutes: string;
 }
 
 function App() {
-	const [respect, setRespect] = useState<number>(400);
-	const [mining, setMining] = useState<number>(28);
+	const [respect, setRespect] = useState('0');
+	const [mining, setMining] = useState('0');
 	const [result, setResult] = useState<CalculatorResult | null>(null);
 
 	const calculate = useCallback(() => {
 		const capacity = Math.round(21000 + 2100 * mining);
 		const speed = 43.75 + 0.4375 * respect;
 		const timeMinutes = capacity / speed;
-		const timeRounded = Math.round(timeMinutes);
 
 		setResult({
 			capacity,
 			speed,
 			timeMinutes,
-			timeRounded
 		});
 	}, [respect, mining]);
 
@@ -63,9 +60,9 @@ function App() {
 					<input
 						id="respect"
 						type="number"
-						step="0.01"
+						step="1"
 						value={respect}
-						onChange={(e) => setRespect(Number(e.target.value) || 0)}
+						onChange={(e) => setRespect((e.target.value))}
 						placeholder="0"
 						className="input-group--text"
 					/>
@@ -76,23 +73,23 @@ function App() {
 					<input
 						id="mining"
 						type="number"
-						step="0.01"
+						step="1"
 						value={mining}
-						onChange={(e) => setMining(Number(e.target.value) || 0)}
+						onChange={(e) => setMining((e.target.value))}
 						placeholder="0"
 						className="input-group--text"
 					/>
 				</div>
 
-				{/* <button onClick={calculate} className="calculate-btn">
+				<button onClick={calculate} className="calculate-btn">
 					🚬 Рассчитать время
-				</button> */}
+				</button>
 
 				{result && (
 					<div className="result">
 						<h3>Результаты:</h3>
 						<div className="stat">
-							<span>Макс. вместимость:</span>
+							<span>Максимальная вместимость (лимит):</span>
 							<span>{result.capacity.toLocaleString('ru-RU')} сиг</span>
 						</div>
 						<div className="stat">
@@ -100,11 +97,7 @@ function App() {
 							<span>{result.speed.toFixed(2)} сиг/мин</span>
 						</div>
 						<div className="stat">
-							<span>Время (минуты):</span>
-							<span>{result.timeRounded} мин</span>
-						</div>
-						<div className="stat">
-							<span>Время (часы, минуты):</span>
+							<span>Время заполнения до лимита:</span>
 							<span>{formatTimeHM(result.timeMinutes)}</span>
 						</div>
 					</div>
