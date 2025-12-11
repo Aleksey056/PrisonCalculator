@@ -43,7 +43,7 @@ h1 {
 }
 
 .input-group {
-	margin-bottom: clamp(15px, 4vw, 25px);
+	margin-bottom: clamp(15px, 4vw, 15px);
 }
 
 .input-group label {
@@ -303,11 +303,6 @@ h1 {
 	color: white;
 }
 
-/* .stat.highlight {
-	background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.1));
-	border: 1px solid rgba(76, 175, 80, 0.4);
-} */
-
 .result h3 {
 	text-align: center;
 }
@@ -324,5 +319,114 @@ h1 {
 
 	.support-section {
 		margin-top: 25px;
+	}
+}
+
+/* Добавь в конец App.css */
+
+.input-section {
+	margin-bottom: 30px;
+}
+
+.input-section h3 {
+	color: rgba(255, 255, 255, 0.95);
+	margin: 0 0 20px 0;
+	font-size: 1.2rem;
+	text-align: center;
+	font-weight: 600;
+}
+
+.npc-grid {
+	display: flex;
+	flex-wrap: wrap;
+	/* ✅ ПЕРЕНОСА */
+	gap: 8px;
+	/* ✅ Меньший gap */
+	justify-content: center;
+	overflow-x: auto;
+	/* ✅ Горизонтальная прокрутка при необходимости */
+	padding: 10px 0;
+}
+
+.npc-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	/* ✅ Меньший gap */
+	padding: 10px 12px;
+	/* ✅ Компактнее */
+	background: rgba(255, 255, 255, 0.15);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	transition: all 0.3s ease;
+	min-width: 160px;
+	/* ✅ Компактнее */
+	flex-shrink: 0;
+	/* ✅ Не сжимается */
+	max-width: 170px;
+}
+
+.npc-item:hover {
+	background: rgba(255, 255, 255, 0.25);
+	transform: translateY(-1px);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.npc-info {
+	flex: 1;
+	min-width: 0;
+}
+
+.npc-name {
+	display: block;
+	font-weight: 700;
+	color: white;
+	font-size: 0.9rem;
+	/* ✅ Меньше */
+	margin-bottom: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.npc-max {
+	display: block;
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 0.75rem;
+	/* ✅ Меньше */
+}
+
+.npc-select {
+	padding: 6px 10px;
+	/* ✅ Компактнее */
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 6px;
+	background: white;
+	color: black;
+	font-weight: 700;
+	font-size: 0.95rem;
+	/* ✅ Меньше */
+	cursor: pointer;
+	min-width: 45px;
+	/* ✅ Компактнее */
+	appearance: none;
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+	background-position: right 6px center;
+	background-repeat: no-repeat;
+	background-size: 14px;
+	padding-right: 24px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+	.npc-grid {
+		flex-wrap: wrap;
+		/* ✅ На мобилках можно переносить */
+		gap: 10px;
+	}
+
+	.npc-item {
+		min-width: 140px;
+		max-width: 150px;
 	}
 }
