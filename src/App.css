@@ -8,18 +8,18 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 	min-height: 100vh;
-	/* width: 80%; */
-	margin-left: auto;
-	margin-right: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	color: black;
+	padding: 20px;
+	/* отступы на маленьких экранах */
 }
 
 .app {
 	width: 100%;
-	width: 700px;
+	max-width: 700px;
+	/* максимальная ширина на ПК */
 	padding: 20px;
 }
 
@@ -27,21 +27,23 @@ body {
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
 	border-radius: 20px;
-	padding: 40px 30px;
+	padding: clamp(20px, 5vw, 40px) clamp(20px, 5vw, 30px);
+	/* адаптивные отступы */
 	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 	border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 h1 {
 	text-align: center;
-	margin: 0 0 40px 0;
+	margin: 0 0 clamp(20px, 5vw, 40px) 0;
 	color: white;
-	font-size: 1.8rem;
+	font-size: clamp(1.4rem, 4vw, 1.8rem);
+	/* от 1.4rem до 1.8rem */
 	font-weight: 700;
 }
 
 .input-group {
-	margin-bottom: 25px;
+	margin-bottom: clamp(15px, 4vw, 25px);
 }
 
 .input-group label {
@@ -49,18 +51,19 @@ h1 {
 	font-weight: 600;
 	margin-bottom: 8px;
 	color: rgba(255, 255, 255, 0.9);
-	font-size: 0.95rem;
+	font-size: clamp(0.85rem, 2.5vw, 0.95rem);
 }
 
 .input-group input {
 	width: 100%;
-	padding: 15px;
+	padding: clamp(12px, 3vw, 15px);
 	border: none;
 	border-radius: 12px;
-	font-size: 16px;
+	font-size: clamp(14px, 4vw, 16px);
 	background: rgba(255, 255, 255, 0.95);
 	transition: all 0.3s ease;
 	font-family: inherit;
+	color: black;
 }
 
 .input-group input:focus {
@@ -75,34 +78,36 @@ h1 {
 	background: linear-gradient(135deg, #ff6b6b, #ff5252);
 	color: white;
 	border: none;
-	padding: 18px;
+	padding: clamp(15px, 4vw, 18px);
 	border-radius: 12px;
-	font-size: 1.1rem;
+	font-size: clamp(1rem, 3vw, 1.1rem);
 	font-weight: 700;
 	cursor: pointer;
-	margin: 25px 0;
+	margin: clamp(20px, 5vw, 25px) 0;
 	transition: all 0.3s ease;
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
 }
 
-.calculate-btn:hover {
+.calculate-btn:hover,
+.calculate-btn:active {
 	transform: translateY(-2px);
 	box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
 }
 
 .result {
 	background: rgba(255, 255, 255, 0.15);
-	padding: 25px;
+	padding: clamp(20px, 5vw, 25px);
 	border-radius: 15px;
 	margin-top: 20px;
 	backdrop-filter: blur(10px);
 }
 
 .result h3 {
-	margin: 0 0 20px 0;
+	margin: 0 0 clamp(15px, 4vw, 20px) 0;
 	color: white;
-	font-size: 1.2rem;
+	font-size: clamp(1.1rem, 3vw, 1.2rem);
+	text-align: center;
 }
 
 .stat {
@@ -110,7 +115,7 @@ h1 {
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 15px;
-	padding: 15px;
+	padding: clamp(12px, 3vw, 15px);
 	background: rgba(255, 255, 255, 0.1);
 	border-radius: 10px;
 	transition: all 0.3s ease;
@@ -124,25 +129,199 @@ h1 {
 .stat span:first-child {
 	font-weight: 500;
 	color: rgba(255, 255, 255, 0.9);
+	font-size: clamp(0.9rem, 2.5vw, 1rem);
 }
 
 .stat span:last-child {
 	font-weight: 700;
-	font-size: 1.1rem;
+	font-size: clamp(1rem, 3vw, 1.1rem);
 	color: white;
+	text-align: right;
 }
 
 .input-group--text {
 	color: black;
 }
 
+/* Планшеты (768px - 1024px) */
+@media (max-width: 1024px) {
+	.app {
+		max-width: 90vw;
+	}
+
+	body {
+		padding: 15px;
+	}
+}
+
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+	body {
+		padding: 10px;
+		align-items: flex-start;
+		/* убираем центрирование сверху */
+		margin-top: 20px;
+	}
+
+	.app {
+		padding: 10px;
+		max-width: 100%;
+	}
+
+	.calculator {
+		padding: 25px 20px;
+		border-radius: 15px;
+	}
+
+	.stat {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.stat span:last-child {
+		text-align: left;
+		font-size: clamp(1.1rem, 5vw, 1.2rem);
+	}
+
+	.stat:hover {
+		transform: none;
+		/* убираем сдвиг на мобильных */
+	}
+}
+
+/* Очень маленькие экраны (до 480px) */
 @media (max-width: 480px) {
 	.calculator {
-		margin: 10px;
-		padding: 30px 20px;
+		padding: 20px 15px;
+		margin: 0;
 	}
 
 	h1 {
-		font-size: 1.5rem;
+		margin-bottom: 25px;
+	}
+
+	.result h3 {
+		font-size: 1.1rem;
+	}
+}
+
+/* Ориентация landscape на мобильных */
+@media (max-height: 500px) and (orientation: landscape) {
+	body {
+		align-items: stretch;
+		padding: 10px;
+	}
+
+	.app {
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+}
+
+/* Добавь в конец твоего App.css */
+
+.support-section {
+	margin-top: clamp(30px, 8vw, 50px);
+	padding: clamp(20px, 5vw, 30px);
+	background: rgba(255, 255, 255, 0.08);
+	border-radius: 15px;
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.support-section h4,
+.support-section h5 {
+	color: rgba(255, 255, 255, 0.95);
+	margin: 0 0 15px 0;
+	font-size: clamp(1rem, 3vw, 1.1rem);
+	font-weight: 600;
+}
+
+.donate-info {
+	margin-bottom: 20px;
+}
+
+.donate-card {
+	background: linear-gradient(135deg, rgba(72, 177, 247, 0.2), rgba(22, 82, 247, 0.2));
+	padding: 20px;
+	border-radius: 12px;
+	border: 1px solid rgba(7, 44, 255, 0.3);
+}
+
+.donate-label {
+	display: block;
+	font-size: 0.9rem;
+	color: rgba(255, 255, 255, 0.8);
+	margin-bottom: 5px;
+}
+
+.donate-number {
+	display: block;
+	font-size: clamp(1.1rem, 4vw, 1.3rem);
+	font-weight: 700;
+	color: white;
+	letter-spacing: 1px;
+	font-family: 'Courier New', monospace;
+	background: rgba(0, 0, 0, 0.2);
+	padding: 8px 12px;
+	border-radius: 6px;
+	margin-bottom: 8px;
+}
+
+.donate-bank {
+	font-size: 0.9rem;
+	color: rgba(22, 0, 224, 0.9);
+	font-weight: 600;
+}
+
+.contact-info {
+	text-align: center;
+	padding-top: 20px;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-link {
+	display: inline-block;
+	color: #ffffff;
+	text-decoration: none;
+	font-size: clamp(0.95rem, 3vw, 1rem);
+	font-weight: 600;
+	padding: 10px 20px;
+	background: rgba(79, 195, 247, 0.1);
+	border-radius: 25px;
+	border: 1px solid rgba(79, 195, 247, 0.3);
+	transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+	background: rgba(79, 195, 247, 0.2);
+	transform: translateY(-1px);
+	color: white;
+}
+
+/* .stat.highlight {
+	background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.1));
+	border: 1px solid rgba(76, 175, 80, 0.4);
+} */
+
+.result h3 {
+	text-align: center;
+}
+
+/* Адаптивность для поддержки */
+@media (max-width: 768px) {
+	.donate-card {
+		padding: 15px;
+	}
+
+	.donate-number {
+		font-size: 1.1rem;
+	}
+
+	.support-section {
+		margin-top: 25px;
 	}
 }

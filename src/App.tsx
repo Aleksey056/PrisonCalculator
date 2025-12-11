@@ -5,6 +5,7 @@ type CalculatorResult = {
 	capacity: string;
 	speed: string;
 	timeMinutes: string;
+	capacityDay: string;
 };
 
 function App() {
@@ -23,11 +24,13 @@ function App() {
 		const capacity = Math.round(21000 + 2100 * miningNum);
 		const speed = 43.75 + 0.4375 * respectNum;
 		const timeMinutes = capacity / speed;
+		const dailyUnlimited = speed * 1440;
 
 		setResult({
 			capacity: capacity.toLocaleString('ru-RU'),
 			speed: speed.toFixed(2),
 			timeMinutes: formatTimeHM(timeMinutes),
+			capacityDay: Math.round(dailyUnlimited).toLocaleString('ru-RU'),
 		});
 	}, [respect, mining]);
 
@@ -88,13 +91,9 @@ function App() {
 					/>
 				</div>
 
-				{/* <button onClick={calculate} className="calculate-btn">
-					🚬 Рассчитать время
-				</button> */}
-
 				{result && (
 					<div className="result">
-						<h3>Результаты:</h3>
+						<h3>📊 Результаты:</h3>
 						<div className="stat">
 							<span>Максимальная вместимость (лимит):</span>
 							<span>{result.capacity} сиг</span>
@@ -107,8 +106,31 @@ function App() {
 							<span>Время заполнения до лимита:</span>
 							<span>{result.timeMinutes}</span>
 						</div>
+						<div className="stat highlight">
+							<span>Максимум за день (без лимита):</span>
+							<span>{result.capacityDay} сиг</span>
+						</div>
 					</div>
 				)}
+
+				{/* Красиво оформленный блок поддержки */}
+				<div className="support-section">
+					<h4>☕ Поддержать автора</h4>
+					<div className="donate-info">
+						<div className="donate-card">
+							<span className="donate-label">На доширак и кофе:</span>
+							<span className="donate-number">2204 3204 8304 7330</span>
+							<span className="donate-bank">OZON Банк</span>
+						</div>
+					</div>
+
+					<div className="contact-info">
+						<h5>💡 Предложения и доработки:</h5>
+						<a href="mailto:aikrendukov@yandex.ru" className="contact-link">
+							aikrendukov@yandex.ru
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
